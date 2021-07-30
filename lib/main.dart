@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quiz.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 Quiz quiz = Quiz();
 void main() => runApp(Quizzler());
@@ -29,7 +30,14 @@ class _QuizPageState extends State<QuizPage> {
   void checkAnswer(bool userPickAnswer) {
     bool correctAnswer = quiz.getQuestionAnswer();
     setState(() {
-      if (userPickAnswer == correctAnswer) {
+      if (quiz.isFinished() == true) {
+        Alert(
+          context: context,
+          title: 'Finish',
+          desc: 'you have completed successfully',
+        ).show();
+        quiz.reset();
+      } else if (userPickAnswer == correctAnswer) {
         scoreKeeper.add(Icon(
           Icons.check,
           color: Colors.green,
@@ -139,6 +147,7 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
+
 
 /*
 question1: 'Is DGPC App Development Company?.', false,
